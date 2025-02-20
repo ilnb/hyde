@@ -35,6 +35,10 @@ hyprpicker                                             # color picker
 slurp                                                  # region select for screenshot/screenshare
 swappy                                                 # screenshot editor
 cliphist                                               # clipboard manager
+fcitx5
+fcitx5-mozc
+fcitx5-qt
+fcitx5-configtool
 
 # --------------------------------------------------- // Dependencies
 polkit-gnome                                           # authentication agent
