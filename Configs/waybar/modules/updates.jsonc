@@ -4,7 +4,7 @@
         "format": "{}",
         "rotate": ${r_deg},
         "on-click": "hyprctl dispatch exec 'systemupdate.sh up'",
-        "interval": 86400, // once every day
+        "interval": 7200, // once every 2 hours
         "tooltip": true,
         "signal": 20,
     },
