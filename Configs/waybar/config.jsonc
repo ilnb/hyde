@@ -175,7 +175,7 @@
       "(.*)Steam": "Steam 󰓓",
       "(.*) - Discord": " $1",
     },
-    "max-length": 50
+    "max-length": 35
   },
 
   "backlight": {
