@@ -67,7 +67,6 @@ zen-browser-bin                                        # browser
 kitty                                                  # terminal
 thunar                                                 # kde file manager
 ark                                                    # kde file archiver
-neovim                                                 # terminal text editor
 tinyxxd
 zsh
 
