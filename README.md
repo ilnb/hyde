@@ -1,3 +1,7 @@
+# README
+
+This is basically a fork of [HyDE](https://github.com/prasanthrangan/hyprdots), customized to my preferences.
+
 ###### *<div align="right"><sub>// design by t2</sub></div>*
 <div align = center>
     <a href="https://discord.gg/AYbJ9MJez7">
