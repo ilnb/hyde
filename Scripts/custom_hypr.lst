@@ -7,7 +7,7 @@ pipewire-pulse                                         # pipewire pulseaudio cli
 gst-plugin-pipewire                                    # pipewire gstreamer client
 wireplumber                                            # pipewire session manager
 pavucontrol                                            # pulseaudio volume control
-#pamixer                                                # pulseaudio cli mixer
+#pamixer                                               # pulseaudio cli mixer
 networkmanager-iwd                                     # network manager
 network-manager-applet                                 # network manager system tray utility
 bluez                                                  # bluetooth protocol stack
@@ -15,12 +15,12 @@ bluez-utils                                            # bluetooth utility cli
 blueman                                                # bluetooth manager gui
 brightnessctl                                          # screen brightness control
 udiskie                                                # manage removable media
-lenopow
+lenopow                                                # power modes in lenovo laptops
 
 # --------------------------------------------------- // Display Manager
-qt5-quickcontrols                                      # for sddm theme ui elements
-qt5-quickcontrols2                                     # for sddm theme ui elements
-qt5-graphicaleffects                                   # for sddm theme effects
+#qt5-quickcontrols                                     # for sddm theme ui elements
+#qt5-quickcontrols2                                    # for sddm theme ui elements
+#qt5-graphicaleffects                                  # for sddm theme effects
 
 # --------------------------------------------------- // Window Manager
 hyprland                                               # wlroots-based wayland compositor
@@ -30,21 +30,19 @@ waybar                                                 # system bar
 swww                                                   # wallpaper
 swaylock-effects-git                                   # lock screen
 wlogout                                                # logout menu
-grimblast-git                                          # screenshot tool
 hyprpicker                                             # color picker
+grimblast-git                                          # screenshot tool
 slurp                                                  # region select for screenshot/screenshare
 swappy                                                 # screenshot editor
 cliphist                                               # clipboard manager
-fcitx5
-fcitx5-mozc
-fcitx5-qt
-fcitx5-configtool
+fcitx5-mozc                                            # jp input method
+fcitx5-configtool                                      # config tool for fcitx5
 
 # --------------------------------------------------- // Dependencies
 polkit-gnome                                           # authentication agent
 xdg-desktop-portal-hyprland                            # xdg desktop portal for hyprland
 pacman-contrib                                         # for system update check
-#python-pyamdgpuinfo                                    # for amd gpu info
+#python-pyamdgpuinfo                                   # for amd gpu info
 parallel                                               # for parallel processing
 jq                                                     # for json processing
 libnotify                                              # for notifications
@@ -61,10 +59,10 @@ qt6-wayland                                            # wayland support in qt6
 # --------------------------------------------------- // Applications
 zen-browser-bin                                        # browser
 kitty                                                  # terminal
-thunar                                                 # kde file manager
+thunar                                                 # file manager
 neovim                                                 # terminal text editor
-tinyxxd
-zsh
+tinyxxd                                                # hexdump
+zsh                                                    # shell
 
 # --------------------------------------------------- // Shell
 eza|zsh                                                # file lister for zsh
