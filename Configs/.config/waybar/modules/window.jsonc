@@ -5,7 +5,8 @@
     "rewrite": {
       "": "", // empty workspace
       "^(…/.*|~(?:/.*)?|/.*)$": " Terminal", // zsh, kitty
-      "(.*)sauceguy@Sus:(.*)": "$1  :$2",
+      //"(.*)${USER}@${set_sysname}:(.*)": "$1  :$2",
+      "(.*)@${set_sysname}:(.*)": " $1",
       "nvim (.*)": " $1",
       "nvim ": " Neovim",
       "(.*) — Mozilla Firefox": "󰈹 $1",
@@ -15,7 +16,6 @@
       "(?!.*󰗃)(.*)Zen Browser Private Browsing": "󰈹 Zen - Private",
       "(.*?)-\\s*YouTube — Zen Browser": "󰗃 $1",
       "(.*?\\s)YouTube — Zen Browser": "󰗃 YouTube",
-      "(.*?\\s)YouTube - Zen Browser Private Browsing": "󰗃 YouTube - Private",
       // "(.*) — Zen Browser": "󰈹 $1",
       // "(.*)Zen Browser": "Zen 󰈹 $1",
       //"(.*) — Dolphin": "󰉋 $1",
