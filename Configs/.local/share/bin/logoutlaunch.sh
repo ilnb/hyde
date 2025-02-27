@@ -20,7 +20,7 @@ wlTmplt="${confDir}/wlogout/style_${wlogoutStyle}.css"
 
 if [ ! -f "${wLayout}" ] || [ ! -f "${wlTmplt}" ] ; then
     echo "ERROR: Config ${wlogoutStyle} not found..."
-    wlogoutStyle=1
+    wlogoutStyle=2
     wLayout="${confDir}/wlogout/layout_${wlogoutStyle}"
     wlTmplt="${confDir}/wlogout/style_${wlogoutStyle}.css"
 fi
