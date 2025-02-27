@@ -7,7 +7,7 @@ pipewire-pulse                                         # pipewire pulseaudio cli
 gst-plugin-pipewire                                    # pipewire gstreamer client
 wireplumber                                            # pipewire session manager
 pavucontrol                                            # pulseaudio volume control
-#pamixer                                               # pulseaudio cli mixer
+pamixer                                                # pulseaudio cli mixer
 networkmanager-iwd                                     # network manager
 network-manager-applet                                 # network manager system tray utility
 bluez                                                  # bluetooth protocol stack
@@ -63,6 +63,7 @@ thunar                                                 # file manager
 neovim                                                 # terminal text editor
 tinyxxd                                                # hexdump
 zsh                                                    # shell
+ark                                                    # kde file archiver
 
 # --------------------------------------------------- // Shell
 eza|zsh                                                # file lister for zsh
