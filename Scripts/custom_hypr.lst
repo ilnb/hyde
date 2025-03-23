@@ -16,6 +16,8 @@ blueman                                                # bluetooth manager gui
 brightnessctl                                          # screen brightness control
 udiskie                                                # manage removable media
 lenopow                                                # power modes in lenovo laptops
+plymouth-git                                           # boot splash
+plymouth-theme-monoarch                                # theme for boot splash
 
 # --------------------------------------------------- // Display Manager
 #qt5-quickcontrols                                     # for sddm theme ui elements
@@ -42,7 +44,7 @@ fcitx5-configtool                                      # config tool for fcitx5
 polkit-gnome                                           # authentication agent
 xdg-desktop-portal-hyprland                            # xdg desktop portal for hyprland
 pacman-contrib                                         # for system update check
-#python-pyamdgpuinfo                                   # for amd gpu info
+python-pyamdgpuinfo                                   # for amd gpu info
 parallel                                               # for parallel processing
 jq                                                     # for json processing
 libnotify                                              # for notifications
@@ -57,13 +59,13 @@ qt5-wayland                                            # wayland support in qt5
 qt6-wayland                                            # wayland support in qt6
 
 # --------------------------------------------------- // Applications
-zen-browser                                            # browser
+zen-browser-bin                                        # browser
 kitty                                                  # terminal
 thunar                                                 # file manager
 neovim                                                 # terminal text editor
 tinyxxd                                                # hexdump
 zsh                                                    # shell
-ark                                                    # kde file archiver
+#ark                                                    # kde file archiver
 
 # --------------------------------------------------- // Shell
 eza|zsh                                                # file lister for zsh
