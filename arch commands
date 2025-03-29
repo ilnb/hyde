@@ -58,7 +58,7 @@ sudo mkinitcpio -P
 git clone git@github.com:ilnb/hyde.git ~/hyde
 cd ~/hyde/Scripts
 ./install.sh
-sudo plymouth-set-default-theme -R monoarch
+sudo plymouth-set-default-theme -R arch-breeze
 sudo pacman -Rnsdd hyprcursor-git hyprgraphics-git hyprgraphics-git-debug hyprland-git hyprland-git-debug hyprland-protocols-git hyprland-qtutils-git hyprland-qt-support-git hyprland-qtutils-git-debug hyprlang-git hyprpicker hyprpolkitagent-git-debug hyprutils-git hyprwayland-scanner-git
 sudo pacman -Sy hyprland
 

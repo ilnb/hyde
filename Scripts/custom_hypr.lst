@@ -17,7 +17,7 @@ brightnessctl                                          # screen brightness contr
 udiskie                                                # manage removable media
 lenopow                                                # power modes in lenovo laptops
 plymouth-git                                           # boot splash
-plymouth-theme-monoarch                                # theme for boot splash
+plymouth-theme-arch-breeze-git                         # theme for boot splash
 
 # --------------------------------------------------- // Display Manager
 #qt5-quickcontrols                                     # for sddm theme ui elements
