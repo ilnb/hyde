@@ -23,9 +23,9 @@ exec = gsettings set org.gnome.desktop.interface cursor-size $CURSOR_SIZE
 exec = hyprctl setcursor $CURSOR_THEME $CURSOR_SIZE
 
 general {
-    gaps_in = 3
-    gaps_out = 8
-    border_size = 2
+    gaps_in = 2
+    gaps_out = 5
+    border_size = 1
     col.active_border = rgba(90ceaaff) rgba(ecd3a0ff) 45deg
     col.inactive_border = rgba(1e8b50d9) rgba(50b050d9) 45deg
     layout = dwindle

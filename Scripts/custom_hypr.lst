@@ -30,7 +30,7 @@ dunst                                                  # notification daemon
 rofi-wayland                                           # application launcher
 waybar                                                 # system bar
 swww                                                   # wallpaper
-swaylock-effects-git                                   # lock screen
+hyprlock                                               # lock screen
 wlogout                                                # logout menu
 hyprpicker                                             # color picker
 grimblast-git                                          # screenshot tool
@@ -61,7 +61,7 @@ qt6-wayland                                            # wayland support in qt6
 # --------------------------------------------------- // Applications
 zen-browser-bin                                        # browser
 kitty                                                  # terminal
-thunar                                                 # file manager
+nemo                                                   # file manager
 neovim                                                 # terminal text editor
 tinyxxd                                                # hexdump
 zsh                                                    # shell

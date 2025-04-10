@@ -13,9 +13,9 @@ exec = gsettings set org.gnome.desktop.interface gtk-theme $GTK_THEME
 exec = gsettings set org.gnome.desktop.interface color-scheme $COLOR_SCHEME
 
 general {
-    gaps_in = 3
-    gaps_out = 8
-    border_size = 2
+    gaps_in = 2
+    gaps_out = 5
+    border_size = 1
     col.active_border = rgba(ca9ee6ff) rgba(f2d5cfff) 45deg
     col.inactive_border = rgba(b4befecc) rgba(6c7086cc) 45deg
     layout = dwindle
