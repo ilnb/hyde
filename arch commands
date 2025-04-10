@@ -1,0 +1,136 @@
+1. Github and SSH setup
+sudo pacman -Sy git ssh gh
+git config --global user.name 'ilnb'
+git config --global user.email 'lnbsa12345@gmail.com'
+git config --global init.defaultBranch main
+git config --global pull.rebase false
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+ssh-keygen -t ed25519
+cat ~/.ssh/id_ed25519.pub
+
+# Add this to git ssh keys
+
+ssh-keygen -p
+ssh -T git@github.com
+
+# git-cli setup
+gh auth login
+
+# To make repos
+gh create repo <repo-name> --private
+
+# To connect a directory to a repo
+git remote add origin <ssh-link>
+
+# First push
+git push -u origin main
+
+# Check all branches
+git branch
+
+# Commit history
+git log
+
+# All the commits
+git log --pretty=format:'%h'
+
+# Changes in one file
+git log -p file # -p shows the diff
+
+# Another way
+git diff commit_hash
+
+2. Yay
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+
+3. NVIDIA setup
+sudo pacman -Sy nvidia-utils nvidia-dkms egl-wayland
+yay -Sy dxvk-bin vkd3d-proton-bin
+
+4. Hyprland
+
+# In /etc/mkinitcpio.conf, add
+MODULES = (nvidia nvidia_modeset nvidia_uvm nvidia_drm)}
+sudo mkinitcpio -P
+
+git clone git@github.com:ilnb/hyde.git ~/hyde
+cd ~/hyde/Scripts
+./install.sh
+sudo plymouth-set-default-theme -R arch-breeze
+sudo pacman -Rnsdd hyprcursor-git hyprgraphics-git hyprgraphics-git-debug hyprland-git hyprland-git-debug hyprland-protocols-git hyprland-qtutils-git hyprland-qt-support-git hyprland-qtutils-git-debug hyprlang-git hyprpicker hyprpolkitagent-git-debug hyprutils-git hyprwayland-scanner-git
+sudo pacman -Sy hyprland
+
+# Clear cache after setting up zsh
+
+5. Zsh configuration
+rm ~/.zsh*
+git clone git@github.com:ilnb/zsh.git ~/zsh
+cd ~/zsh
+cp .zshrc .p10k.zsh ~
+chsh -s $(which zsh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+git clone https://github.com/Aloxaf/fzf-tab.git ~/.oh-my-zsh/custom/plugins/fzf-tab
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions
+git clone https://github.com/joshskidmore/zsh-fzf-history-search.git ~/.oh-my-zsh/custom/plugins/zsh-fzf-history-search
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/
+source ~/.zshrc
+
+6. Neovim
+yay -S noto-fonts-emoji
+fc-cache -fv
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+rm -rf ~/.config/nvim/.git/ ~/.config/nvim/README.md
+git clone git@github.com:ilnb/nvim.git ~/.config/nvim/
+
+7. Wine setup
+in wine lutris mangohud
+yay -Sy proton-ge-custom-bin
+winecfg
+
+# Direct X 12
+
+git clone https://github.com/naxl/directx12offline.git
+cd directx12offline/DirectX\ Offline
+wine DXSETUP.exe
+cp -v /usr/share/vkd3d-proton/x64/* ~/.wine/drive_c/windows/system32
+cp -v /usr/share/vkd3d-proton/x86/* ~/.wine/drive_c/windows/syswow64
+
+8. Japanese IME
+
+sudo nvim /etc/locale.gen
+sudo locale-gen
+in fcitx5 fcitx5-mozc fcitx5-qt fcitx5-configtool
+systemctl enable --now fcitx5
+echo "export QT_IM_MODULE='fcitx'\nexport GTK_IM_MODULE='fcitx'\nexport XMODIFIERS='@im=fcitx'" >> ~/.zshrc
+
+9. EFIStub
+
+--part 1 is the /boot, /dev/nvme0n1p1
+--unicode has / UUID
+
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch EFISTUB" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img nvidia_drm.modeset=1" --verbose
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch EFISTUB" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img nvidia_drm.modeset=1 splash rd.udev.log_priority=3 vt.global_cursor_default=0" --verbose
+
+10. Wikiman
+
+curl -L 'https://raw.githubusercontent.com/filiparag/wikiman/master/Makefile' -o 'wikiman'
+cd wikiman
+make -f ./wikiman source-arch
+make -f ./wikiman clean
+make -f ./wikiman source-install
+make -f ./wikiman clang
+make -f ./wikiman gcc
+
+11. Grub theme
+git clone https://github.com/13atm01/GRUB-Theme.git
+
+12. Locale
+sudo nvim /etc/locale.gen
+sudo locale-gen
+sudo echo 'LANG...' > /etc/locale.conf
+locale
+export LANG..
