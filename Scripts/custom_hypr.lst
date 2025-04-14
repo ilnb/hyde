@@ -61,7 +61,7 @@ qt6-wayland                                            # wayland support in qt6
 # --------------------------------------------------- // Applications
 zen-browser-bin                                        # browser
 kitty                                                  # terminal
-nemo                                                   # file manager
+thunar                                                 # file manager
 neovim                                                 # terminal text editor
 tinyxxd                                                # hexdump
 zsh                                                    # shell
