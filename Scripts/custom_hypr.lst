@@ -60,6 +60,8 @@ qt6-wayland                                            # wayland support in qt6
 
 # --------------------------------------------------- // Applications
 zen-browser-bin                                        # browser
+spotify                                                # spotify
+spotify-adblock                                        # with no ads
 kitty                                                  # terminal
 thunar                                                 # file manager
 neovim                                                 # terminal text editor
