@@ -1,0 +1,29 @@
+  "hyprland/window": {
+    //"format": "  {}",
+    "rotate": 0,
+    "separate-outputs": true,
+    "rewrite": {
+      "": "", // empty workspace
+      "^(…/.*|~(?:/.*)?|/.*)$": " Terminal", // zsh, kitty
+      //"(.*)${USER}@${set_sysname}:(.*)": "$1  :$2",
+      "(.*)@${set_sysname}:(.*)": " $1",
+      "nvim (.*)": " $1",
+      "nvim ": " Neovim",
+      "(.*) — Mozilla Firefox": "󰈹 $1",
+      "(.*)Mozilla Firefox": "󰈹 Firefox",
+      "(?!.*󰗃)(.*) — Zen Browser": "󰈹 $1",
+      "(?!.*󰗃)(.*)Zen Browser": "󰈹 Zen",
+      "(?!.*󰗃)(.*)Zen Browser Private Browsing": "󰈹 Zen - Private",
+      "(.*?)-\\s*YouTube — Zen Browser": "󰗃 $1",
+      "(.*?\\s)YouTube — Zen Browser": "󰗃 YouTube",
+      // "(.*) — Zen Browser": "󰈹 $1",
+      // "(.*)Zen Browser": "Zen 󰈹 $1",
+      //"(.*) — Dolphin": "󰉋 $1",
+      "(.*) - Thunar": "󰉋 Thunar",
+      "(.*)Spotify.*": "$1 Spotify 󰓇",
+      "(.*)Steam": "Steam 󰓓",
+      "(.*) - Discord": " $1",
+    },
+    "max-length": 25
+  },
+
