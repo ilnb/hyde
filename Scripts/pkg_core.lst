@@ -70,6 +70,7 @@ qt6-wayland                                            # wayland support in qt6
 zen-browser-bin                                        # browser
 spotify                                                # spotify
 spotify-adblock                                        # with no ads
+spicetify-cli                                          # cli to customize spotify client
 kitty                                                  # terminal
 thunar                                                 # file manager
 #ark                                                   # kde file archiver
@@ -79,6 +80,8 @@ tinyxxd                                                # hexdump
 zsh                                                    # shell
 #nwg-displays                                          # monitor management utility
 fzf                                                    # Command-line fuzzy finder
+mangohud                                               # system performance overlay
+gamemode                                               # daemon and library for game optimizations
 
 # --------------------------------------------------- // Shell
 eza|zsh                                                # file lister for zsh
