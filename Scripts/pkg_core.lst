@@ -13,6 +13,7 @@ network-manager-applet                                 # network manager system 
 bluez                                                  # bluetooth protocol stack
 bluez-utils                                            # bluetooth utility cli
 blueman                                                # bluetooth manager gui
+bluez-obex                                             # bluetooth transfer
 brightnessctl                                          # screen brightness control
 udiskie                                                # manage removable media
 lenopow                                                # power modes in lenovo laptops
