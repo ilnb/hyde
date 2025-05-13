@@ -5,9 +5,9 @@
 
   "layer": "top",
   "output": [ "*" ],
-  "position": "bottom",
+  "position": "top",
   "mod": "dock",
-  "height": 31,
+  "height": 28,
   "exclusive": true,
   "passthrough": false,
   "gtk-layer-shell": true,
@@ -136,8 +136,8 @@
     }
   },
 
-
-"hyprland/workspaces": {
+  "hyprland/workspaces": {
+    "disable-scroll": true,
     "rotate": 0,
     "all-outputs": true,
     "active-only": false,
@@ -145,36 +145,10 @@
     "disable-scroll": false,
     "on-scroll-up": "hyprctl dispatch workspace -1",
     "on-scroll-down": "hyprctl dispatch workspace +1",
-    "format": "{icon}",
     "persistent-workspaces": {
-        // "*": 5
-    },
-    "format-icons": {
-        "1": "一",
-        "2": "二",
-        "3": "三",
-        "4": "四",
-        "5": "五",
-        "6": "六",
-        "7": "七",
-        "8": "八",
-        "9": "九",
-        "10": "十",
-        "11": "十一",
-        "12": "十二",
-        "13": "十三",
-        "14": "十四",
-        "15": "十五",
-        "16": "十六",
-        "17": "十七",
-        "18": "十八",
-        "19": "十九",
-        "20": "二十",
-        "urgent": "",
-        "focused": "",
-        "default": " "
     }
-},
+  },
+
   "hyprland/window": {
     //"format": "  {}",
     "rotate": 0,
@@ -289,7 +263,7 @@
   },
 
   "tray": {
-    "icon-size": 18,
+    "icon-size": 16,
     "rotate": 0,
     "spacing": 5
   },
