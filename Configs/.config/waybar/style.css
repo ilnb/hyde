@@ -100,8 +100,11 @@ tooltip {
 #clock,
 #custom-cpuinfo,
 #cpu,
+#custom-display,
+#custom-github_hyde,
 #custom-github_hyprdots,
 #custom-gpuinfo,
+#custom-hyprsunset,
 #idle_inhibitor,
 #custom-keybindhint,
 #language,
@@ -112,14 +115,20 @@ tooltip {
 #custom-power,
 #privacy,
 #pulseaudio,
+#custom-sensorsinfo,
 #custom-spotify,
 #taskbar,
+#taskbar,
+#taskbar#windows,
 #custom-theme,
 #tray,
 #custom-updates,
 #custom-wallchange,
 #custom-wbar,
+#custom-weather,
 #window,
+#workspaces,
+#workspaces,
 #workspaces,
 #custom-l_end,
 #custom-r_end,
@@ -142,36 +151,36 @@ tooltip {
 
 #custom-r_end {
   border-radius: 0px 21px 21px 0px;
-  margin-right: 9px;
+  margin-right: 6px;
   padding-right: 3px;
 }
 
 #custom-l_end {
   border-radius: 21px 0px 0px 21px;
-  margin-left: 9px;
+  margin-left: 6px;
   padding-left: 3px;
 }
 
 #custom-sr_end {
   border-radius: 0px;
-  margin-right: 9px;
+  margin-right: 6px;
   padding-right: 3px;
 }
 
 #custom-sl_end {
   border-radius: 0px;
-  margin-left: 9px;
+  margin-left: 6px;
   padding-left: 3px;
 }
 
 #custom-rr_end {
   border-radius: 0px 7px 7px 0px;
-  margin-right: 9px;
+  margin-right: 6px;
   padding-right: 3px;
 }
 
 #custom-rl_end {
   border-radius: 7px 0px 0px 7px;
-  margin-left: 9px;
+  margin-left: 6px;
   padding-left: 3px;
 }
