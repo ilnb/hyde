@@ -112,8 +112,8 @@ echo "export QT_IM_MODULE='fcitx'\nexport GTK_IM_MODULE='fcitx'\nexport XMODIFIE
 --part 1 is the /boot, /dev/nvme0n1p1
 --unicode has / UUID
 
-sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch EFISTUB" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img nvidia_drm.modeset=1" --verbose
-sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch EFISTUB" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img nvidia_drm.modeset=1 splash rd.udev.log_priority=3 vt.global_cursor_default=0" --verbose
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch Linux" --loader /vmlinuz-linux --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\\amd-ucode.img initrd=\\initramfs-linux.img nvidia_drm.modeset=1 splash rd.udev.log_priority=3 vt.global_cursor_default=0 mem_sleep_default=deep"
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch LTS" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img nvidia_drm.modeset=1 splash rd.udev.log_priority=3 vt.global_cursor_default=0 mem_sleep_default=deep"
 
 10. Wikiman
 
