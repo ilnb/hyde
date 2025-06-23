@@ -25,6 +25,7 @@ end, keys)
 
 return {
   'echasnovski/mini.surround',
+  event = 'InsertEnter',
   keys = keys,
   opts = opts,
 }
