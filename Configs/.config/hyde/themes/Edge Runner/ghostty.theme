@@ -1,0 +1,45 @@
+$HOME/.config/ghostty/theme|killall -SIGUSR2 ghostty
+
+# The basic colors
+foreground = #FDF500
+background = #000000
+selection-foreground = #000000
+selection-background = #FADA16
+
+# Cursor colors
+cursor-color = #FADA16
+cursor-text = #FADA16
+
+# The 16 terminal colors
+
+# black
+palette = 0=#1F2229
+palette = 8=#1B1C22
+
+# red
+palette = 1=#D62246
+palette = 9=#EC0101
+
+# green
+palette = 2=#4DBD4F
+palette = 10=#1F5322
+
+# yellow
+palette = 3=#FDF500
+palette = 11=#F2CB07
+
+# blue
+palette = 4=#F29C6B
+palette = 12=#FFA6C2
+
+# magenta
+palette = 5=#A56DF2
+palette = 13=#564873
+
+# cyan
+palette = 6=#2CF6B3
+palette = 14=#37EBF3
+
+# white
+palette = 7=#E6E6E6
+palette = 15=#FFFFFF

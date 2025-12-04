@@ -1,0 +1,50 @@
+$HOME/.config/ghostty/theme|killall -SIGUSR2 ghostty
+
+foreground = #a9b1d6
+background = #24283b
+
+# Black
+palette = 0=#414868
+palette = 8=#414868
+
+# Red
+palette = 1=#f7768e
+palette = 9=#f7768e
+
+# Green
+palette = 2=#73daca
+palette = 10=#73daca
+
+# Yellow
+palette = 3=#e0af68
+palette = 11=#e0af68
+
+# Blue
+palette = 4=#7aa2f7
+palette = 12=#7aa2f7
+
+# Magenta
+palette = 5=#bb9af7
+palette = 13=#bb9af7
+
+# Cyan
+palette = 6=#7dcfff
+palette = 14=#7dcfff
+
+# White
+palette = 7=#c0caf5
+palette = 15=#c0caf5
+
+# Cursor
+cursor-color = #c0caf5
+cursor-text = #1a1b26
+
+# Selection highlight
+selection-foreground = #ffffff
+selection-background = #28344a
+
+# Storm
+# background = #24283b
+# cursor-text = #24283b
+# active-tab-background = #1f2335
+# inactive-tab-background = #1f2335

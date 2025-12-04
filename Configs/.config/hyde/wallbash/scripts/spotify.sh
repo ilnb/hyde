@@ -43,6 +43,8 @@ configure_spicetify() {
 # Main script
     cacheDir="${cacheDir:-$XDG_CACHE_HOME/hyde}"
     shareDir=${XDG_DATA_HOME:-$HOME/.local/share}
+    scrPath="$HOME/.local/lib/hyde"
+    source "$scrPath/globalcontrol.sh"
 
     if [ -n "${SPOTIFY_PATH}" ]; then
         spotify_path="${SPOTIFY_PATH}"

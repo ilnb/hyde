@@ -257,7 +257,7 @@
     "format": "{}",
     "rotate": 0,
     "on-click": "hyprctl dispatch exec 'systemupdate.sh up'",
-    "interval": 7200, // once every 2 hours
+    "interval": 120, // once every 2 min
     "tooltip": true,
     "signal": 20,
   },
