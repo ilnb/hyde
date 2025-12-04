@@ -1,0 +1,11 @@
+ignore-timeout=false
+default-timeout=3000
+
+font=JetBrainsMono Nerd Font 9
+
+background-color=#1e1e2eff
+border-color=#707070ff
+text-color=#ffffffff
+
+border-size=1
+border-radius=8
