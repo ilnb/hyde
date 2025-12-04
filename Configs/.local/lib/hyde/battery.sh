@@ -18,23 +18,23 @@ USAGE
 
 # Check for help option
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-    usage
-    exit 0
+  usage
+  exit 0
 fi
 
 total_capacity=0
 battery_count=0
 
 for capacity in /sys/class/power_supply/BAT*/capacity; do
-    if [[ -f "$capacity" ]]; then
-        total_capacity=$((total_capacity + $(<"$capacity")))
-        battery_count=$((battery_count + 1))
-    fi
+  if [[ -f "$capacity" ]]; then
+    total_capacity=$((total_capacity + $(<"$capacity")))
+    battery_count=$((battery_count + 1))
+  fi
 done
 
 # Exit if no battery is found
 if ((battery_count == 0)); then
-    exit 0
+  exit 0
 fi
 
 # Determine the icon based on average capacity
@@ -53,49 +53,49 @@ formats=("$@")
 
 # Function to output the appropriate information based on format option
 output_format() {
-    case "$1" in
-    icon)
-        if [[ "$battery_status" == "Charging" ]]; then
-            echo -n "${charging_icons[$index]} "
-        else
-            echo -n "${discharging_icons[$index]} "
-        fi
-        ;;
-    percentage)
-        echo -n "$average_capacity% "
-        ;;
-    int)
-        echo -n "$average_capacity "
-        ;;
-    status)
-        echo -n "$battery_status "
-        ;;
-    status-icon)
-        case "$battery_status" in
-        "Charging")
-            echo -n "${status_icons[0]} "
-            ;;
-        "Not Charging")
-            echo -n "${status_icons[1]} "
-            ;;
-        *)
-            echo -n "${status_icons[2]} "
-            ;;
-        esac
-        ;;
+  case "$1" in
+  icon)
+    if [[ "$battery_status" == "Charging" ]]; then
+      echo -n "${charging_icons[$index]} "
+    else
+      echo -n "${discharging_icons[$index]} "
+    fi
+    ;;
+  percentage)
+    echo -n "$average_capacity% "
+    ;;
+  int)
+    echo -n "$average_capacity "
+    ;;
+  status)
+    echo -n "$battery_status "
+    ;;
+  status-icon)
+    case "$battery_status" in
+    "Charging")
+      echo -n "${status_icons[0]} "
+      ;;
+    "Not Charging")
+      echo -n "${status_icons[1]} "
+      ;;
     *)
-        echo "Invalid format option: $1. Use 'icon', 'percentage', 'int', 'status', or 'status-icon'."
-        exit 1
-        ;;
+      echo -n "${status_icons[2]} "
+      ;;
     esac
+    ;;
+  *)
+    echo "Invalid format option: $1. Use 'icon', 'percentage', 'int', 'status', or 'status-icon'."
+    exit 1
+    ;;
+  esac
 }
 
 # Output the information based on provided format options
 if [ ${#formats[@]} -eq 0 ]; then
-    output_format "icon"
+  output_format "icon"
 else
-    for format in "${formats[@]}"; do
-        output_format "$format"
-    done
-    echo
+  for format in "${formats[@]}"; do
+    output_format "$format"
+  done
+  echo
 fi

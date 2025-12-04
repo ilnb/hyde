@@ -7,38 +7,37 @@ source "${scrDir}/globalcontrol.sh"
 show_help() {
   cat <<HELP
 Usage: $(basename "$0") --[option] 
-    -h, --help  Display this help and exit
-    -e, --execute   Explicit command to execute
+  -h, --help  Display this help and exit
+  -e, --execute   Explicit command to execute
 
 Config: ~/.config/hyde/config.toml
-    
-    [sysmonitor]
-    execute = "btop"                    # Default command to execute // accepts executable or app.desktop
-    commands = ["btop", "htop", "top"]  # Fallback command options
-    terminal = "kitty"                  # Explicit terminal // uses \$TERMINAL if available
-
+  
+  [sysmonitor]
+  execute = "btop"                    # Default command to execute // accepts executable or app.desktop
+  commands = ["btop", "htop", "top"]  # Fallback command options
+  terminal = "kitty"                  # Explicit terminal // uses \$TERMINAL if available
 
 This script launches the system monitor application. 
-    It will launch the first available system monitor 
-    application from the list of 'commands' provided.
+  It will launch the first available system monitor 
+  application from the list of 'commands' provided.
 
 
 HELP
 }
 
 case $1 in
--h | --help)
-  show_help
-  exit 0
-  ;;
--e | --execute)
-  shift
-  SYSMONITOR_EXECUTE=$1
-  ;;
--*)
-  echo "Unknown option: $1" >&2
-  exit 1
-  ;;
+  -h | --help)
+    show_help
+    exit 0
+    ;;
+  -e | --execute)
+    shift
+    SYSMONITOR_EXECUTE=$1
+    ;;
+  -*)
+    echo "Unknown option: $1" >&2
+    exit 1
+    ;;
 esac
 
 pidFile="$HYDE_RUNTIME_DIR/sysmonlaunch.pid"
@@ -57,24 +56,24 @@ if [ -f "$pidFile" ]; then
 fi
 
 pkgChk=("io.missioncenter.MissionCenter" "htop" "btop" "top")                     # Array of commands to check
-pkgChk+=("${SYSMONITOR_COMMANDS[@]}")                                             # Add the user defined array commands
-[ -n "${SYSMONITOR_EXECUTE}" ] && pkgChk=("${SYSMONITOR_EXECUTE}" "${pkgChk[@]}") # Add the user defined executable
+  pkgChk+=("${SYSMONITOR_COMMANDS[@]}")                                             # Add the user defined array commands
+  [ -n "${SYSMONITOR_EXECUTE}" ] && pkgChk=("${SYSMONITOR_EXECUTE}" "${pkgChk[@]}") # Add the user defined executable
 
-for sysMon in "${!pkgChk[@]}"; do
-  if gtk-launch "${pkgChk[sysMon]}"; then
-    pid=$(pgrep -n -f "${pkgChk[sysMon]}")
-    echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
-    break
-  fi
-  if pkg_installed "${pkgChk[sysMon]}"; then
-    term=$(grep -E '^\s*'"$term" "$HOME/.config/hypr/keybindings.conf" | cut -d '=' -f2 | xargs) # dumb search the config
-    term=${TERMINAL:-$term}                                                                      # Use env var
-    term=${SYSMONITOR_TERMINAL:-$term}
-    if ${term} "${pkgChk[sysMon]}"; then
-      pid="${!}"
+  for sysMon in "${!pkgChk[@]}"; do
+    if gtk-launch "${pkgChk[sysMon]}"; then
+      pid=$(pgrep -n -f "${pkgChk[sysMon]}")
       echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
-      disown
       break
     fi
-  fi
-done
+    if pkg_installed "${pkgChk[sysMon]}"; then
+      term=$(grep -E '^\s*'"$TERMINAL" "$HOME/.config/hypr/keybindings.conf" | cut -d '=' -f2 | xargs) # dumb search the config
+      term=${TERMINAL:-$term}                                                                      # Use env var
+      term=${SYSMONITOR_TERMINAL:-$term}
+      if ${term} "${pkgChk[sysMon]}"; then
+        pid="${!}"
+        echo "${pid}:::${pkgChk[sysMon]}" >"$pidFile" # Save the PID to the file
+        disown
+        break
+      fi
+    fi
+  done

@@ -66,9 +66,9 @@ cat <<WALLBASH >"${confDir}/hypr/themes/wallbash.conf"
 WALLBASH
 
 if grep -q "#//---Wallbash mode enabled---" "${confDir}/hypr/themes/wallbash.conf"; then
-    # Remove lines below the detected line
-    sed -i '/#\/\/---Wallbash mode enabled---/,$d' "${confDir}/hypr/themes/wallbash.conf"
+  # Remove lines below the detected line
+  sed -i '/#\/\/---Wallbash mode enabled---/,$d' "${confDir}/hypr/themes/wallbash.conf"
 fi
 if [[ "${enableWallDcol}" -gt 0 ]]; then
-    cat "${hyprWallTheme}" >>"${confDir}/hypr/themes/wallbash.conf"
+  cat "${hyprWallTheme}" >>"${confDir}/hypr/themes/wallbash.conf"
 fi

@@ -3,9 +3,9 @@
 # shellcheck source=$HOME/.local/bin/hyde-shell
 # shellcheck disable=SC1091
 if ! source "$(which hyde-shell)"; then
-    echo "[wallbash] code :: Error: hyde-shell not found."
-    echo "[wallbash] code :: Is HyDE installed?"
-    exit 1
+  echo "[wallbash] code :: Error: hyde-shell not found."
+  echo "[wallbash] code :: Is HyDE installed?"
+  exit 1
 fi
 
 selected_wall="${1:-${XDG_CACHE_HOME:-$HOME/.cache}/hyde/wall.set}"

@@ -16,13 +16,13 @@
 selected_wall="${1:-"$$HYDE_CACHE_HOME/wall.set"}"
 lockFile="$HYDE_RUNTIME_DIR/$(basename "${0}").lock"
 if [ -e "${lockFile}" ]; then
-    cat <<EOF
+  cat <<EOF
 
 Error: Another instance of $(basename "${0}") is running.
 If you are sure that no other instance is running, remove the lock file:
-    ${lockFile}
+  ${lockFile}
 EOF
-    exit 1
+  exit 1
 fi
 touch "${lockFile}"
 trap 'rm -f ${lockFile}' EXIT
@@ -33,35 +33,35 @@ source "${scrDir}/globalcontrol.sh"
 
 # Handle transition
 case "${WALLPAPER_SET_FLAG}" in
-p)
+  p)
     xtrans=${WALLPAPER_SWWW_TRANSITION_PREV}
     xtrans="${xtrans:-"outer"}"
     ;;
-n)
+  n)
     xtrans=${WALLPAPER_SWWW_TRANSITION_NEXT}
     xtrans="${xtrans:-"grow"}"
     ;;
 
-esac
+  esac
 
-selected_wall="$1"
-[ -z "${selected_wall}" ] && echo "No input wallpaper" && exit 1
-selected_wall="$(readlink -f "${selected_wall}")"
+  selected_wall="$1"
+  [ -z "${selected_wall}" ] && echo "No input wallpaper" && exit 1
+  selected_wall="$(readlink -f "${selected_wall}")"
 
-if ! swww query &>/dev/null; then
+  if ! swww query &>/dev/null; then
     swww-daemon --format xrgb &
     disown
     swww query && swww restore
-fi
+  fi
 
-is_video=$(file --mime-type -b "${selected_wall}" | grep -c '^video/')
-if [ "${is_video}" -eq 1 ]; then
+  is_video=$(file --mime-type -b "${selected_wall}" | grep -c '^video/')
+  if [ "${is_video}" -eq 1 ]; then
     print_log -sec "wallpaper" -stat "converting video" "$selected_wall"
     mkdir -p "${HYDE_CACHE_HOME}/wallpapers/thumbnails"
     cached_thumb="$HYDE_CACHE_HOME/wallpapers/$(${hashMech:-sha1sum} "${selected_wall}" | cut -d' ' -f1).png"
     extract_thumbnail "${selected_wall}" "${cached_thumb}"
     selected_wall="${cached_thumb}"
-fi
+  fi
 
 #// set defaults
 xtrans=${WALLPAPER_SWWW_TRANSITION_DEFAULT}

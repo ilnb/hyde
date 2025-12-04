@@ -10,7 +10,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 logger = logger.get_logger()
 
 pip_env.v_import("pyamdgpuinfo") # fetches the module by name // does `pip install --update pyamdgpuinfo` under the hood
-import pyamdgpuinfo 
+import pyamdgpuinfo
 
 
 def format_frequency(frequency_hz: int) -> str:

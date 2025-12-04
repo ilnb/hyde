@@ -18,9 +18,9 @@ src_file="${confDir}/hypr/themes/theme.conf"
 b_height=${WAYBAR_SCALE:-$(grep '^1|' "$conf_ctl" | cut -d '|' -f 2)}
 
 if [ -z "$b_height" ] || [ "$b_height" == "0" ]; then
-    y_monres=$(cat /sys/class/drm/*/modes | head -1 | cut -d 'x' -f 2)
-    y_monres=$(hyprctl -j monitors | jq '.[] | select(.focused == true) | (.height / .scale)')
-    b_height=$((y_monres * 3 / 100))
+  y_monres=$(cat /sys/class/drm/*/modes | head -1 | cut -d 'x' -f 2)
+  y_monres=$(hyprctl -j monitors | jq '.[] | select(.focused == true) | (.height / .scale)')
+  b_height=$((y_monres * 3 / 100))
 fi
 
 # calculate values based on height
@@ -39,10 +39,10 @@ export w_padact=$((b_height * 14 / 100)) # padding for active workspace
 export s_fontpx=$((b_height * 34 / 100)) # font size
 
 if [ "$b_height" -lt 30 ]; then
-    export e_paddin=0
+  export e_paddin=0
 fi
 if [ $s_fontpx -lt 10 ]; then
-    export s_fontpx=10
+  export s_fontpx=10
 fi
 
 # adjust values for vert/horz
@@ -50,7 +50,7 @@ fi
 w_position="$(grep '^1|' "$conf_ctl" | cut -d '|' -f 3)"
 export w_position
 case ${w_position} in
-top | bottom)
+  top | bottom)
     export x1g_margin=${g_margin}
     export x2g_margin=0
     export x3g_margin=${g_margin}
@@ -76,7 +76,7 @@ top | bottom)
     export x3="left"
     export x4="right"
     ;;
-left | right)
+  left | right)
     export x1g_margin=0
     export x2g_margin=${g_margin}
     export x3g_margin=0
@@ -117,5 +117,5 @@ envsubst <"$in_file" >"$out_file"
 hypr_border=$(awk -F '=' '{if($1~" rounding ") print $2}' "$src_file" | sed 's/ //g')
 hypr_border=${hypr_border:-$WAYBAR_BORDER_RADIUS}
 if [ "$hypr_border" == "0" ] || [ -z "$hypr_border" ]; then
-    sed -i "/border-radius: /c\    border-radius: 0px;" "$out_file"
+  sed -i "/border-radius: /c\  border-radius: 0px;" "$out_file"
 fi

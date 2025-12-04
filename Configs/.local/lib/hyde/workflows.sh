@@ -23,9 +23,9 @@ show_help() {
 Usage: $0 [OPTIONS]
 
 Options:
-    --select | -S       Select a workflow from the available options
-    --waybar            Get workflow info for Waybar
-    --help   | -h       Show this help message
+  --select | -S       Select a workflow from the available options
+  --waybar            Get workflow info for Waybar
+  --help   | -h       Show this help message
     
 HELP
 }

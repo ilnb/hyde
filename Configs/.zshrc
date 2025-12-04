@@ -44,9 +44,25 @@ elif pacman -Qi paru &>/dev/null; then
   aurhelper="paru"
 fi
 
+# fzf directories
+fzf_cd() {
+  local dir
+  dir=$(
+    fd -t d -H -E .git -E .cache . "$HOME" \
+    | rg '^(\.config|\.local|[^.])|^\.\./' \
+    | sed "s|^$HOME|~|; s|/$||" \
+    | fzf
+  ) || return
+  dir="${dir/#\~/$HOME}"
+  cd -- "$dir" || return
+  zle accept-line
+}
+zle -N fzf_cd
+
 # Keybindings
 bindkey -v
 bindkey '^H' fzf_history_search
+bindkey '^F' fzf_cd
 # bindkey '^p' history-search-backward
 # bindkey '^n' history-search-forward
 
@@ -62,32 +78,42 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
+setopt NO_BEEP
+# unsetopt hist_verify # uncoment for direct exec of expansions
 
 # Completion styling
+_comp_options+=(globdots)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1a --icons=auto --color=always $realpath'
+zstyle ':fzf-tab:complete:cpg:*' fzf-preview 'eza -1a --icons=auto --color=always $realpath'
+zstyle ':fzf-tab:complete:mvg:*' fzf-preview 'eza -1a --icons=auto --color=always $realpath'
+zstyle ':fzf-tab:complete:nvim:*' fzf-preview 'eza -1a --icons=auto --color=always $realpath'
+zstyle ':fzf-tab:complete:rm:*' fzf-preview 'eza -1a --icons=auto --color=always $realpath'
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'eza -1a --icons=auto --color=always $realpath'
 
 # General Aliases
-alias hy='hyprland'
 alias c='clear'
 alias ff='c && fastfetch'
-alias ffn='c && fastfetch --load-config ~/.config/fastfetch/base_config.jsonc'
+alias ffn='c && fastfetch --config ~/.config/fastfetch/base_config.jsonc'
 alias ffa='c && ff -c all'
 alias com='nvim ~/code/arch\ commands'
-#alias nvcfg='find ~/.config/nvim \( -path "*/.git/*" \) -prune -o -printf "%P\n" | fzf | xargs -rI {} nvim ~/.config/nvim/"{}"'
+# alias nvcfg='find ~/.config/nvim \( -path "*/.git/*" \) -prune -o -printf "%P\n" | fzf | xargs -rI {} nvim ~/.config/nvim/"{}"'
 alias ng='~/.config/nvim'
 alias hycfg='find ~/.config/hypr \( -path "*/.git/*" \) -prune -o -printf "%P\n" | fzf | xargs -rI {} nvim ~/.config/hypr/"{}"'
 alias hg='~/.config/hypr'
-alias cpr='rsync -h --info=progress2'
+alias cp='/usr/bin/cpg -g'
+alias mv='/usr/bin/mvg -g'
+alias open='open_command'
+# alias cp='rsync -h --info=progress2'
 alias shell='nvim ~/.zshrc'
 alias his='nvim ~/.zsh_history'
 alias anime='ani-cli'
-alias lutris='/opt/lutris.sh'
-alias nvfz='fzf | xargs -r nvim'
-alias nvfze='fzf -e | xargs -r nvim'
+alias fvim='fzf --preview "cat {}" | xargs -rI {} nvim "{}"'
+alias fevim='fzf -e --preview "cat {}" | xargs -rI {} nvim "{}"'
 alias pyenv='source ~/venv/bin/activate'
+alias lvim='NVIM_APPNAME=lazyvim nvim'
 
 # System related
 alias off='shutdown now'
@@ -98,59 +124,64 @@ alias dont='lenopow -e'
 # Listing files and directories
 alias ls='eza --icons=auto' # grid
 alias la='eza -a --icons=auto' # grid all
-alias l='eza -lh --icons=auto' # long list
-alias ll='eza -lha --icons=auto --sort=name --group-directories-first' # long list all
-alias ld='eza -lhaD --icons=auto' # long list dirs
+alias l='eza -lha --icons=auto' # long list
+alias ll='l'
 alias lt='eza --icons=auto --tree' # list folder as tree
 
 # Power modes
 psave() {
-  for cpu in /sys/devices/system/cpu/cpu[0-9]*; do
-    echo powersave | sudo tee "$cpu/cpufreq/scaling_governor"
+  for cpu in /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference; do
+    echo power | sudo tee "$cpu" >/dev/null
   done
+
+  echo 0 | sudo tee /sys/devices/system/cpu/cpufreq/boost
 }
 
 perf() {
-  for cpu in /sys/devices/system/cpu/cpu[0-9]*; do
-    echo performance | sudo tee "$cpu/cpufreq/scaling_governor"
+  for cpu in /sys/devices/system/cpu/cpu*/cpufreq/energy_performance_preference; do
+    echo performance | sudo tee "$cpu" >/dev/null
   done
+
+  echo 1 | sudo tee /sys/devices/system/cpu/cpufreq/boost
 }
 
 # Git Aliases
 alias g='git'
-alias ga='git add'
-alias gaa='git add --all' # adds new and old files
-alias gcm='git commit -m' # commit message
-alias gcam='git commit -am' # commits old files
-alias gaacm='git add -A && git commit -m' # commits new and old files
-alias gp='git push'
-alias gpm='git push --set-upstream origin main'
-alias gst='git status'
-alias grs='git restore'
-alias grst='git restore --staged'
+alias ga='g add'
+alias gaa='g add --all' # adds new and old files
+alias gc='g clone'
+alias gcm='g commit -m' # commit message
+alias gcam='g commit -am' # commits old files
+alias gaacm='g add -A && g commit -m' # commits new and old files
+alias gp='g push'
+alias gpm='g push -u origin master'
+alias gst='g status'
+alias gs='gst'
+alias grs='g restore'
+alias grst='g restore --staged'
 
 # Packages
 alias pl='$aurhelper -Qs' # list installed package
 alias pa='$aurhelper -Ss' # list available package
 alias pc='yes | $aurhelper -Sc' # remove unused cache
-alias po='$aurhelper -Qtdq | $aurhelper -Rns -' # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print -
+alias po='$aurhelper -Qtdq | xargs -ro $aurhelper -Rns' # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print -
 alias in='sudo pacman -Sy'
 alias yin='yay -Sy'
 alias un='sudo pacman -Rns'
 alias up='in -u && yin -u'
 
-# Directory navigation shortcuts
-alias yz='yazi'
-alias ..='cd ..'
-alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-
-# Always mkdir a path (this doesn't inhibit functionality to make a single dir)
+# Always mkdir a path
 alias mkdir='mkdir -p'
 
 # Shell integrations
-export QT_IM_MODULE='fcitx'
-export XMODIFIERS='@im=fcitx'
+export PATH="$HOME/.cargo/bin:$PATH"
+# export PATH="$HOME/.zig:$PATH"
+# export PATH="$CUDA_PATH:$PATH"
+# export INPUT_METHOD='fcitx'  # might not need all this
+# export GTK_IM_MODULE='fcitx'
+# export QT_IM_MODULE='fcitx'
+# export XMODIFIERS='@im=fcitx'
 export LANG='en_US.UTF-8'
+export FZF_DEFAULT_COMMAND='fd -HI -t f -E .git'
+export EDITOR='nvim'
+eval "$(zoxide init --cmd cd zsh)"

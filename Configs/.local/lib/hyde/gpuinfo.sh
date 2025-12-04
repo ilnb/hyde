@@ -360,52 +360,52 @@ fi
 source "${gpuinfo_file}"
 
 case "$1" in
-"--toggle" | "-t")
-  toggle
-  echo -e "Sensor: ${NEXT_PRIORITY} GPU" | sed 's/_ENABLE//g'
-  exit
-  ;;
-"--use" | "-u")
-  toggle "$2"
-  ;;
-"--reset" | "-rf")
-  rm -fr "${gpuinfo_file}"*
-  query
-  echo -e "Initialized Variable:\n$(cat "${gpuinfo_file}" || true)\n\nReboot or '$0 --reset' to RESET Variables"
-  exit
-  ;;
-"--stat")
-  case "$2" in
-  "amd")
-    if [[ "${GPUINFO_AMD_ENABLE}" -eq 1 ]]; then
-      echo "GPUINFO_AMD_ENABLE: ${GPUINFO_AMD_ENABLE}"
-      exit 0
-    fi
+  "--toggle" | "-t")
+    toggle
+    echo -e "Sensor: ${NEXT_PRIORITY} GPU" | sed 's/_ENABLE//g'
+    exit
     ;;
-  "intel")
-    if [[ "${GPUINFO_INTEL_ENABLE}" -eq 1 ]]; then
-      echo "GPUINFO_INTEL_ENABLE: ${GPUINFO_INTEL_ENABLE}"
-      exit 0
-    fi
+  "--use" | "-u")
+    toggle "$2"
     ;;
-  "nvidia")
-    if [[ "${GPUINFO_NVIDIA_ENABLE}" -eq 1 ]]; then
-      echo "GPUINFO_NVIDIA_ENABLE: ${GPUINFO_NVIDIA_ENABLE}"
-      exit 0
-    fi
+  "--reset" | "-rf")
+    rm -fr "${gpuinfo_file}"*
+    query
+    echo -e "Initialized Variable:\n$(cat "${gpuinfo_file}" || true)\n\nReboot or '$0 --reset' to RESET Variables"
+    exit
     ;;
-  *)
-    echo "Error: Invalid argument for --stat. Use amd, intel, or nvidia."
+  "--stat")
+    case "$2" in
+    "amd")
+      if [[ "${GPUINFO_AMD_ENABLE}" -eq 1 ]]; then
+        echo "GPUINFO_AMD_ENABLE: ${GPUINFO_AMD_ENABLE}"
+        exit 0
+      fi
+      ;;
+    "intel")
+      if [[ "${GPUINFO_INTEL_ENABLE}" -eq 1 ]]; then
+        echo "GPUINFO_INTEL_ENABLE: ${GPUINFO_INTEL_ENABLE}"
+        exit 0
+      fi
+      ;;
+    "nvidia")
+      if [[ "${GPUINFO_NVIDIA_ENABLE}" -eq 1 ]]; then
+        echo "GPUINFO_NVIDIA_ENABLE: ${GPUINFO_NVIDIA_ENABLE}"
+        exit 0
+      fi
+      ;;
+    *)
+      echo "Error: Invalid argument for --stat. Use amd, intel, or nvidia."
+      exit 1
+      ;;
+    esac
+    echo "GPU not enabled."
     exit 1
     ;;
-  esac
-  echo "GPU not enabled."
-  exit 1
-  ;;
-*"-"*)
-  GPUINFO_AVAILABLE=${GPUINFO_AVAILABLE//GPUINFO_/}
-  cat <<EOF
-  Available GPU: ${GPUINFO_AVAILABLE//_ENABLE/}
+  *"-"*)
+    GPUINFO_AVAILABLE=${GPUINFO_AVAILABLE//GPUINFO_/}
+    cat <<EOF
+Available GPU: ${GPUINFO_AVAILABLE//_ENABLE/}
 [options]
 --toggle         * Toggle available GPU
 --use [GPU]      * Only call the specified GPU (Useful for adding specific GPU on waybar)
@@ -418,8 +418,8 @@ case "$1" in
 
 * If ${USER} declared env = AQ_DRM_DEVICES on hyprland then use this as the primary GPU
 EOF
-  exit
-  ;;
+    exit
+    ;;
 esac
 
 GPUINFO_NVIDIA_ENABLE=${GPUINFO_NVIDIA_ENABLE:-0} GPUINFO_INTEL_ENABLE=${GPUINFO_INTEL_ENABLE:-0} GPUINFO_AMD_ENABLE=${GPUINFO_AMD_ENABLE:-0}
