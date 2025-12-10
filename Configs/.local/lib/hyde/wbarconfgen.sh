@@ -159,12 +159,17 @@ cat "${modules_dir}/footer.jsonc" >>"${conf_file}"
 # restart waybar
 
 if [ "$reload_flag" == "1" ]; then
-  killall waybar
-  if [ -f "${waybar_dir}/config" ] && [ -s "${waybar_dir}/config" ]; then
-    waybar &
-    disown
+  if pgrep -x qs >/dev/null; then
+    killall qs
+    caelestia shell & disown
   else
-    waybar --config "${waybar_dir}/config.jsonc" --style "${waybar_dir}/style.css" 2>&1 &
-    disown
+    killall waybar
+    if [ -f "${waybar_dir}/config" ] && [ -s "${waybar_dir}/config" ]; then
+      waybar &
+      disown
+    else
+      waybar --config "${waybar_dir}/config.jsonc" --style "${waybar_dir}/style.css" 2>&1 &
+      disown
+    fi
   fi
 fi

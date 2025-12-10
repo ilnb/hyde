@@ -73,3 +73,4 @@ xtrans=${WALLPAPER_SWWW_TRANSITION_DEFAULT}
 # TODO: add support for other backends
 print_log -sec "wallpaper" -stat "apply" "$selected_wall"
 swww img "$(readlink -f "$selected_wall")" --transition-bezier .43,1.19,1,.4 --transition-type "${xtrans}" --transition-duration "${wallTransDuration}" --transition-fps "${wallFramerate}" --invert-y --transition-pos "$(hyprctl cursorpos | grep -E '^[0-9]' || echo "0,0")" &
+caelestia wallpaper -f "$(readlink -f "$selected_wall")"
