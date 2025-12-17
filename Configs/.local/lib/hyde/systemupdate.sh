@@ -31,7 +31,7 @@ if [ "$1" == "up" ] ; then
     done < "$temp_file"
 
     command="
-    sleep 0.1
+    sleep 0.2
     fastfetch
     printf '[Official] %-10s\n[AUR]      %-10s\n[Flatpak]  %-10s\n' '$official' '$aur' '$flatpak'
     ${aurhlpr} -Syu
