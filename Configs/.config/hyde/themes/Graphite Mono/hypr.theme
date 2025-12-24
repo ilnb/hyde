@@ -3,6 +3,7 @@ $HOME/.config/hypr/themes/theme.conf|> $HOME/.config/hypr/themes/colors.conf
 
 $GTK_THEME = Graphite-Mono
 $ICON_THEME = Tela-circle-grey
+$CURSOR_THEME = Bibata-Modern-Ice
 $COLOR_SCHEME = prefer-dark
 
 # Optional: The varibles above will be set automatically when the theme is loaded
@@ -30,7 +31,7 @@ group {
 }
 
 decoration {
-    rounding = 0
+    rounding = 10
 
     blur {
         enabled = yes
