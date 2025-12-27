@@ -1,9 +1,10 @@
 $HOME/.config/hypr/themes/theme.conf|> $HOME/.config/hypr/themes/colors.conf
 
 $GTK_THEME = Gtk_Tundra
-$ICON_THEME = Zafiro-Nord-Black
+$ICON_THEME = Nordzy
 $COLOR_SCHEME = prefer-dark
 $CURSOR_THEME = volantes_cursors
+$CURSOR_SIZE = 28
 
 exec = gsettings set org.gnome.desktop.interface icon-theme '$ICON_THEME'
 exec = gsettings set org.gnome.desktop.interface gtk-theme '$GTK_THEME'
