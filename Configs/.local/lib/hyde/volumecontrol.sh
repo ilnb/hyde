@@ -8,11 +8,11 @@ confDir=${confDir:-$XDG_CONFIG_HOME}
 
 # Check if SwayOSD is installed
 use_swayosd=false
-isNotify=${VOLUME_NOTIFY:-true}
+notify=${VOLUME_NOTIFY:-true}
 if command -v swayosd-client >/dev/null 2>&1 && pgrep -x swayosd-server >/dev/null; then
     use_swayosd=true
 fi
-isVolumeBoost="${VOLUME_BOOST:-false}"
+vol_boost="${VOLUME_BOOST:-true}"
 # Define functions
 
 print_usage() {
@@ -55,16 +55,16 @@ notify_vol() {
   [ "$angle" -gt 100 ] && angle=100
   ico="${icodir}/${iconStyle}-${angle}.svg"
   bar=$(seq -s "." $((vol / 15)) | sed 's/[0-9]//g')
-  [[ "${isNotify}" == true ]] && notify-send -a "HyDE Notify" -r 8 -t 1500 -i "${ico}" "${vol}${bar}" "${nsink}"
+  [[ "${notify}" == true ]] && notify-send -a "HyDE Notify" -r 8 -t 1500 -i "${ico}" "${vol}${bar}" "${nsink}"
 }
 
 notify_mute() {
   mute=$(pamixer "${srce}" --get-mute | cat)
   [ "${srce}" == "--default-source" ] && dvce="microphone" || dvce="speaker"
   if [ "${mute}" == "true" ]; then
-    [[ "${isNotify}" == true ]] && notify-send -a "HyDE Notify" -r 8 -t 1500 -i "${icodir}/muted-${dvce}.svg" "muted" "${nsink}"
+    [[ "${notify}" == true ]] && notify-send -a "HyDE Notify" -r 8 -t 1500 -i "${icodir}/muted-${dvce}.svg" "muted" "${nsink}"
   else
-    [[ "${isNotify}" == true ]] && notify-send -a "HyDE Notify" -r 8 -t 1500 -i "${icodir}/unmuted-${dvce}.svg" "unmuted" "${nsink}"
+    [[ "${notify}" == true ]] && notify-send -a "HyDE Notify" -r 8 -t 1500 -i "${icodir}/unmuted-${dvce}.svg" "unmuted" "${nsink}"
   fi
 }
 
@@ -79,9 +79,9 @@ change_volume() {
   [ "${srce}" = "--default-source" ] && mode="--input-volume"
   case $device in
     "pamixer")
-      if [ "${isVolumeBoost}" = true ]; then
+      if [ "${vol_boost}" = true ]; then
         $use_swayosd && swayosd-client ${mode} "${delta}${step}" --max-volume "${VOLUME_BOOST_LIMIT:-150}" && exit 0
-        pamixer "$srce" "${allow_boost:-}" --allow-boost --set-limit "${VOLUME_BOOST_LIMIT:-150}" -"${action}" "$step"
+        pamixer "$srce" --allow-boost --set-limit "${VOLUME_BOOST_LIMIT:-150}" -"${action}" "$step"
       else
         $use_swayosd && swayosd-client ${mode} "${delta}${step}" && exit 0
         pamixer "$srce" -"${action}" "$step"
@@ -192,7 +192,7 @@ while getopts "iop:stq" opt; do
       exit
       ;;
     q)
-      isNotify=false
+      notify=false
       ;;
     *) print_usage ;;
   esac
