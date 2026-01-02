@@ -63,4 +63,4 @@ decoration {
     }
 }
 
-layerrule = blur,waybar
+layerrule = match:namespace waybar, blur on

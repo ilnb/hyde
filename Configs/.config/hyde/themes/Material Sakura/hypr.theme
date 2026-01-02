@@ -55,4 +55,4 @@ decoration {
     }
 }
 
-layerrule = unset,waybar
+layerrule = match:namespace waybar, blur off
