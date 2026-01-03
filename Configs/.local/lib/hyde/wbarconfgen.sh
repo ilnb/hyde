@@ -162,7 +162,8 @@ if [ "$reload_flag" == "1" ]; then
   if pgrep -x qs >/dev/null; then
     killall qs
     caelestia shell & disown
-  else
+  fi
+  if pgrep -x waybar >/dev/null; then
     killall waybar
     if [ -f "${waybar_dir}/config" ] && [ -s "${waybar_dir}/config" ]; then
       waybar &
