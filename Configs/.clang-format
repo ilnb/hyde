@@ -1,0 +1,11 @@
+BasedOnStyle: LLVM
+ColumnLimit: 100
+NamespaceIndentation: All
+
+# BreakBeforeBraces: Custom
+# BraceWrapping:
+#   AfterFunction: true
+
+# AllowShortIfStatementsOnASingleLine: true
+# AllowShortLoopsOnASingleLine: true
+# AllowShortBlocksOnASingleLine: true
