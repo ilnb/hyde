@@ -61,6 +61,8 @@ zle -N fzf_cd
 
 # Keybindings
 bindkey -v
+bindkey '^W' backward-kill-word
+bindkey -M vicmd '^W' backward-kill-word
 bindkey '^H' fzf_history_search
 bindkey '^F' fzf_cd
 # bindkey '^p' history-search-backward
@@ -114,6 +116,8 @@ alias fvim='fzf --preview "cat {}" | xargs -rI {} nvim "{}"'
 alias fevim='fzf -e --preview "cat {}" | xargs -rI {} nvim "{}"'
 alias pyenv='source ~/venv/bin/activate'
 alias lvim='NVIM_APPNAME=lazyvim nvim'
+alias gcc='gcc -std=c23'
+alias g++='g++ -std=c++20'
 
 # System related
 alias off='shutdown now'
@@ -163,7 +167,7 @@ alias grst='g restore --staged'
 # Packages
 alias pl='$aurhelper -Qs' # list installed package
 alias pa='$aurhelper -Ss' # list available package
-alias pc='yes | $aurhelper -Sc' # remove unused cache
+alias pc='sudo rm -r /var/cache/pacman/pkg/download*; yes | $aurhelper -Sc' # remove unused cache
 alias po='$aurhelper -Qtdq | xargs -ro $aurhelper -Rns' # remove unused packages, also try > $aurhelper -Qqd | $aurhelper -Rsu --print -
 alias in='sudo pacman -Sy'
 alias yin='yay -Sy'
@@ -175,6 +179,8 @@ alias mkdir='mkdir -p'
 
 # Shell integrations
 export PATH="$HOME/.cargo/bin:$PATH"
+export QML_IMPORT_PATH="/usr/lib/qt/qml"
+export QML_IMPORT_PATH="$HOME/.config/quickshell:$QML_IMPORT_PATH"
 # export PATH="$HOME/.zig:$PATH"
 # export PATH="$CUDA_PATH:$PATH"
 # export INPUT_METHOD='fcitx'  # might not need all this
