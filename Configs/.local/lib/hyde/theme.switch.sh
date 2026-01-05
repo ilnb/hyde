@@ -240,3 +240,5 @@ if [ "$quiet" = true ]; then
 else
   "${scrDir}/wallpaper.sh" -s "$(readlink "${HYDE_THEME_DIR}/wall.set")" --global
 fi
+
+"${scrDir}/qsreload.sh"
