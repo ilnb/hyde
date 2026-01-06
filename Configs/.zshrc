@@ -116,6 +116,7 @@ alias fvim='fzf --preview "cat {}" | xargs -rI {} nvim "{}"'
 alias fevim='fzf -e --preview "cat {}" | xargs -rI {} nvim "{}"'
 alias pyenv='source ~/venv/bin/activate'
 alias lvim='NVIM_APPNAME=lazyvim nvim'
+alias g++='g++ -std=c++20'
 
 # System related
 alias off='shutdown now'
