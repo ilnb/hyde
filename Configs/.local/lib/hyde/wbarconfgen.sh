@@ -14,7 +14,7 @@ export scrDir
 
 readarray -t read_ctl <"${conf_ctl}"
 num_files="${#read_ctl[@]}"
-  switch=0
+switch=0
 
 # update control file to set next/prev mode
 
@@ -158,19 +158,13 @@ cat "${modules_dir}/footer.jsonc" >>"${conf_file}"
 
 # restart waybar
 
-if [ "$reload_flag" == "1" ]; then
-  if pgrep -x qs >/dev/null; then
-    killall qs
-    caelestia shell & disown
-  fi
-  if pgrep -x waybar >/dev/null; then
-    killall waybar
-    if [ -f "${waybar_dir}/config" ] && [ -s "${waybar_dir}/config" ]; then
-      waybar &
-      disown
-    else
-      waybar --config "${waybar_dir}/config.jsonc" --style "${waybar_dir}/style.css" 2>&1 &
-      disown
-    fi
+if ((reload_flag % 2 == 1)); then
+  killall waybar
+  if [ -f "${waybar_dir}/config" ] && [ -s "${waybar_dir}/config" ]; then
+    waybar &
+    disown
+  else
+    waybar --config "${waybar_dir}/config.jsonc" --style "${waybar_dir}/style.css" 2>&1 &
+    disown
   fi
 fi

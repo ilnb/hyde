@@ -57,7 +57,6 @@ sanitize_hypr_theme() {
   done
   cat "${buffer_file}" >"${output_file}"
   rm -f "${buffer_file}"
-
 }
 
 #// evaluate options
@@ -99,7 +98,8 @@ done
 set_conf "HYDE_THEME" "${themeSet}"
 print_log -sec "theme" -stat "apply" "${themeSet}"
 
-export reload_flag=1
+export reload_flag=0
+pgrep -x waybar >/dev/null && reload_flag=$((reload_flag+1))
 # shellcheck disable=SC1091
 source "${scrDir}/globalcontrol.sh"
 
@@ -241,4 +241,5 @@ else
   "${scrDir}/wallpaper.sh" -s "$(readlink "${HYDE_THEME_DIR}/wall.set")" --global
 fi
 
+pgrep -x qs >/dev/null && reload_flag=$((reload_flag+2))
 "${scrDir}/qsreload.sh"
