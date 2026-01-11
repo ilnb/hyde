@@ -102,6 +102,8 @@ reload_flag=0
 pgrep -x waybar >/dev/null && reload_flag=$((reload_flag+1))
 pgrep -x qs >/dev/null && reload_flag=$((reload_flag+2))
 export reload_flag
+pkill waybar
+pkill qs
 # shellcheck disable=SC1091
 source "${scrDir}/globalcontrol.sh"
 
