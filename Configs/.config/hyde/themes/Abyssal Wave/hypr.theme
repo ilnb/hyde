@@ -14,7 +14,7 @@ exec = gsettings set org.gnome.desktop.interface cursor-size $CURSOR_SIZE
 exec = hyprctl setcursor $CURSOR_THEME $CURSOR_SIZE
 
 general {
-    border_size = 3
+    border_size = 2
     col.inactive_border = rgba(6a9589b0) # Kanagawa crust color with opacity
     col.active_border = rgba(dcd7baee) rgba(957fb8b0) rgba(957fb8b0) rgba(dcd7baee) 45deg # Kanagawa fujiWhite and lavender
 
