@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# WAYCLICK ELITE - ARCH LINUX / UV OPTIMIZED
+# WAYCLICK - ARCH LINUX / UV OPTIMIZED
 # ==============================================================================
 # Source: https://github.com/dusklinux/dusky
 # ==============================================================================
@@ -38,7 +38,7 @@ if [[ $EUID -eq 0 ]]; then
 fi
 
 # 1. Toggle Logic (Fixed)
-# Check if the runner is active. 
+# Check if the runner is active.
 # We use 'if' directly so the script doesn't crash if pgrep finds nothing.
 if pgrep -f "$RUNNER_SCRIPT" >/dev/null; then
   printf "%b[TOGGLE]%b Stopping active instance...\n" "${C_YELLOW}" "${C_RESET}"
@@ -130,7 +130,7 @@ fi
 # 5. Sound Files Check
 check_sounds() {
   [[ -d "$CONFIG_DIR" ]] || return 1
-  # Check for config.json only. 
+  # Check for config.json only.
   # We trust config.json to point to files that exist.
   # Python will handle missing WAVs gracefully (by skipping them).
   [[ -f "${CONFIG_DIR}/config.json" ]] || return 1
@@ -171,7 +171,7 @@ if [[ ! -d "$VENV_DIR" ]]; then
   uv venv "$VENV_DIR" --python 3.13 --quiet
 fi
 
-# Check dependencies. 
+# Check dependencies.
 MARKER_FILE="$BASE_DIR/.build_marker_v3"
 
 if [[ ! -f "$MARKER_FILE" ]]; then
@@ -184,8 +184,8 @@ if [[ ! -f "$MARKER_FILE" ]]; then
   printf "       %bThis runs ON THE METAL. No generic binaries allowed.%b\n" "${C_DIM}" "${C_RESET}"
 
   # ---------------------------------------------------------
-  # ELITE BUILD FLAGS
-  # -march=native: Use all instructions available on THIS CPU
+  # BUILD FLAGS
+  # -march=native: Use all instructions available on this cpu
   # -O3: Maximum optimization
   # -fno-plt: Faster dynamic linking calls
   # ---------------------------------------------------------
@@ -217,7 +217,7 @@ import json
 # Clean startup
 os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 # Low latency audio drivers
-os.environ['SDL_BUFFER_CHUNK_SIZE'] = '256' 
+os.environ['SDL_BUFFER_CHUNK_SIZE'] = '256'
 
 import pygame
 import evdev
@@ -250,12 +250,12 @@ print(f"{C_BLUE}[INFO]{C_RESET} Loading assets from {ASSET_DIR}...")
 try:
     with open(CONFIG_FILE, 'r') as f:
         config_data = json.load(f)
-        
+
         # JSON keys are strings, but evdev expects integers.
         # We assume the config file uses string representation of integers (e.g. "1": "file.wav")
         RAW_KEY_MAP = {int(k): v for k, v in config_data.get("mappings", {}).items()}
         DEFAULTS = config_data.get("defaults", [])
-        
+
 except Exception as e:
     print(f"{C_RED}[CONFIG ERROR]{C_RESET} Failed to load {CONFIG_FILE}: {e}")
     sys.exit(1)
@@ -297,17 +297,23 @@ for code, filename in RAW_KEY_MAP.items():
 # Pre-bind random choice to avoid module lookup in hot path
 _random_choice = random.choice
 
+# Relative volume
+VOLUME_RELATIVE = 0.65
+
 def play_sound(code):
     # Ultra-fast path
     if code < MAX_KEYCODE:
         sound = SOUND_CACHE[code]
         if sound:
+            sound.set_volume(VOLUME_RELATIVE)
             sound.play()
             return
 
     # Fallback (unmapped keys or missing sound files)
     if DEFAULT_SOUND_OBJS:
-        _random_choice(DEFAULT_SOUND_OBJS).play()
+        sound = _random_choice(DEFAULT_SOUND_OBJS)
+        sound.set_volume(VOLUME_RELATIVE)
+        sound.play()
 
 async def read_device(path, stop_event):
     """Async reader for a specific input device."""
@@ -315,14 +321,14 @@ async def read_device(path, stop_event):
     try:
         dev = evdev.InputDevice(path)
         print(f"{C_GREEN}[+] Connected:{C_RESET} {dev.name}")
-        
+
         async for event in dev.async_read_loop():
             if stop_event.is_set():
                 break
             # EV_KEY (1) and Value 1 (Key Down)
             if event.type == 1 and event.value == 1:
                 play_sound(event.code)
-                
+
     except (OSError, IOError):
         print(f"{C_YELLOW}[-] Disconnected:{C_RESET} {path}")
     except asyncio.CancelledError:
@@ -333,13 +339,13 @@ async def read_device(path, stop_event):
 
 async def main():
     print(f"{C_BLUE}[CORE]{C_RESET} Engine started. Monitoring devices...")
-    
+
     stop = asyncio.Event()
     loop = asyncio.get_running_loop()
-    
+
     for sig in (signal.SIGINT, signal.SIGTERM):
         loop.add_signal_handler(sig, stop.set)
-    
+
     monitored_tasks = {} # path -> task
 
     while not stop.is_set():
@@ -347,14 +353,14 @@ async def main():
         try:
             # We explicitly check for EV_KEY capabilities to filter out non-keyboards
             all_paths = evdev.list_devices()
-            
+
             for path in all_paths:
                 if path in monitored_tasks:
                     continue
-                
+
                 try:
                     dev = evdev.InputDevice(path)
-                    
+
                     # Trackpad Filtering (User Toggle)
                     if not ENABLE_TRACKPADS:
                         name_lower = dev.name.lower()
@@ -384,7 +390,7 @@ async def main():
             await asyncio.wait_for(stop.wait(), timeout=3.0)
         except asyncio.TimeoutError:
             continue
-    
+
     # Graceful Shutdown
     print("\nStopping...")
     for t in monitored_tasks.values():
