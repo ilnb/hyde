@@ -298,7 +298,7 @@ for code, filename in RAW_KEY_MAP.items():
 _random_choice = random.choice
 
 # Relative volume
-VOLUME_RELATIVE = 0.65
+VOLUME_RELATIVE = 0.25
 
 def play_sound(code):
     # Ultra-fast path

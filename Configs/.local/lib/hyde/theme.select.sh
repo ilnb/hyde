@@ -167,6 +167,7 @@ case "$1" in
 
 if [ -n "${rofiSel}" ]; then
   "${LIB_DIR}/hyde/theme.switch.sh" -s "${rofiSel}"
+  sleep 2
   # shellcheck disable=SC2154
   notify-send -a "HyDE Alert" -i "${iconsDir}/Wallbash-Icon/hyde.png" " ${rofiSel}"
 fi

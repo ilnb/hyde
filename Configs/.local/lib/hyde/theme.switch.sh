@@ -246,3 +246,5 @@ else
 fi
 
 "${scrDir}/qsreload.sh"
+spicetify config color_scheme caelestia current_theme caelestia
+spicetify -n apply
