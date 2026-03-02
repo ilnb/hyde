@@ -2,7 +2,7 @@
 sudo pacman -Sy git ssh gh
 git config --global user.name 'ilnb'
 git config --global user.email 'lnbsa12345@gmail.com'
-git config --global init.defaultBranch main
+git config --global init.defaultBranch master
 git config --global pull.rebase false
 git config --global url."git@github.com:".insteadOf "https://github.com/"
 ssh-keygen -t ed25519
@@ -51,16 +51,17 @@ yay -Sy dxvk-bin vkd3d-proton-bin
 
 4. Hyprland
 
-# In /etc/mkinitcpio.conf, add
-MODULES = (nvidia nvidia_modeset nvidia_uvm nvidia_drm)}
-sudo mkinitcpio -P
-
 git clone git@github.com:ilnb/hyde.git ~/hyde
 cd ~/hyde/Scripts
 ./install.sh
+yin plymouth-theme-arch-breeze-git plymouth-git
 sudo plymouth-set-default-theme -R arch-breeze
-sudo pacman -Rnsdd hyprcursor-git hyprgraphics-git hyprgraphics-git-debug hyprland-git hyprland-git-debug hyprland-protocols-git hyprland-qtutils-git hyprland-qt-support-git hyprland-qtutils-git-debug hyprlang-git hyprpicker hyprpolkitagent-git-debug hyprutils-git hyprwayland-scanner-git
-sudo pacman -Sy hyprland
+sudo ln -sf /usr/share/plymouth/themes/arch-breeze/logo{_full_blue,}.png
+wget https://github.com/adi1090x/plymouth-themes/releases/download/v1.0/splash.tar.gz
+tar xf splash.tar.gz
+cd splash
+sudo mv splash /usr/share/plymouth/themes/splash
+sudo plymouth-set-default-theme -R splash
 
 # Clear cache after setting up zsh
 
@@ -71,27 +72,26 @@ cd ~/zsh
 cp .zshrc .p10k.zsh ~
 chsh -s $(which zsh)
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/Aloxaf/fzf-tab.git ~/.oh-my-zsh/custom/plugins/fzf-tab
-git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-completions.git ~/.oh-my-zsh/custom/plugins/zsh-completions
-git clone https://github.com/joshskidmore/zsh-fzf-history-search.git ~/.oh-my-zsh/custom/plugins/zsh-fzf-history-search
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k/
+cd ~/.oh-my-zsh/custom/plugins/
+git clone --depth=1 https://github.com/Aloxaf/fzf-tab.git
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git
+git clone --depth=1 https://github.com/zsh-users/zsh-completions.git
+git clone --depth=1 https://github.com/joshskidmore/zsh-fzf-history-search.git
+git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git
+git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ../themes
 source ~/.zshrc
 
 6. Neovim
-yay -S noto-fonts-emoji
-fc-cache -fv
-git clone https://github.com/LazyVim/starter ~/.config/nvim
-rm -rf ~/.config/nvim/.git/ ~/.config/nvim/README.md
+yay -Sy noto-fonts-emoji clang cargo-asm pyright lua-language-server
 git clone git@github.com:ilnb/nvim.git ~/.config/nvim/
 
 7. Wine setup
 in wine lutris mangohud
 yay -Sy proton-ge-custom-bin
 winecfg
+winetricks corefonts msxml6 riched20 gdiplus dotnet472 vcrun2007
 
-# Direct X 12
+# Direct X12
 
 git clone https://github.com/naxl/directx12offline.git
 cd directx12offline/DirectX\ Offline
@@ -102,18 +102,23 @@ cp -v /usr/share/vkd3d-proton/x86/* ~/.wine/drive_c/windows/syswow64
 8. Japanese IME
 
 sudo nvim /etc/locale.gen
+# uncomment ja_JP.UTF-8 UTF-8
 sudo locale-gen
 in fcitx5 fcitx5-mozc fcitx5-qt fcitx5-configtool
 systemctl enable --now fcitx5
-echo "export QT_IM_MODULE='fcitx'\nexport GTK_IM_MODULE='fcitx'\nexport XMODIFIERS='@im=fcitx'" >> ~/.zshrc
 
 9. EFIStub
 
 --part 1 is the /boot, /dev/nvme0n1p1
 --unicode has / UUID
 
+# if using nvidia for display
 sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch Linux" --loader /vmlinuz-linux --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\\amd-ucode.img initrd=\\initramfs-linux.img nvidia_drm.modeset=1 splash rd.udev.log_priority=3 vt.global_cursor_default=0 mem_sleep_default=deep"
 sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch LTS" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img nvidia_drm.modeset=1 splash rd.udev.log_priority=3 vt.global_cursor_default=0 mem_sleep_default=deep"
+
+# if not
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch Linux" --loader /vmlinuz-linux --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\\amd-ucode.img initrd=\\initramfs-linux.img splash rd.udev.log_priority=3 vt.global_cursor_default=0 mem_sleep_default=deep"
+sudo efibootmgr --create --disk /dev/nvme0n1 --part 1 --label "Arch LTS" --loader /vmlinuz-linux-lts --unicode "root=UUID=4924bd89-385c-423c-af6a-ab32d319c451 rw initrd=\amd-ucode.img initrd=\initramfs-linux-lts.img splash rd.udev.log_priority=3 vt.global_cursor_default=0 mem_sleep_default=deep"
 
 10. Wikiman
 
@@ -130,7 +135,134 @@ git clone https://github.com/13atm01/GRUB-Theme.git
 
 12. Locale
 sudo nvim /etc/locale.gen
+# uncomment en_US.UTF-8 UTF-8
 sudo locale-gen
 sudo echo 'LANG...' > /etc/locale.conf
 locale
 export LANG..
+
+13. Kanata
+
+sudo groupadd uinput
+sudo usermod -aG uinput,input $USER
+
+# put this in /etc/udev/rules.d/99-input.rules
+KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+
+sudo udevadm control --reload
+sudo udevadm trigger --verbose --sysname-match=uinput
+sudo modprobe uinput
+yin kanata-bin
+g clone git@github.com:ilnb/kanata
+# check the input file
+ll /dev/uinput
+# the permissions should be something like
+crw-rw----
+
+# if not, that can mean that the group is not a system group,
+# and as udev-rules are applied for system groups only, the rule won't be applied.
+# this command can be used to check the GID, < 1000 for system groups
+getent group uinput
+# if greater, check for a free slot using
+grep -E '^[^:]+:[^:]+:[0-9]{1,3}:' /etc/group | sort -t: -k3 -n
+# suppose 946 is free. then this would change the GID
+sudo groupmod -g 946 uinput
+
+# setup the systemd service for kanata
+# in ~/.config/systemd/user/kanata.service
+
+[Unit]
+Description=Kanata key remapper
+After=graphical.target
+
+[Service]
+ExecStart=/sbin/kanata -c /home/sauceguy/.config/kanata/config.kbd
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
+
+systemctl --user restart kanata.service
+
+14. Zig
+
+mkdir ~/zig_files
+cd ~/zig_files
+# download the latest build
+curl -LO $(curl -s https://ziglang.org/download/index.json | jq -r '.master."x86_64-linux".tarball')
+tar xf zig*
+rm *tar*
+mv zig* zig
+mkdir ~/.zig
+ln -sf ~/zig_files/zig/zig ~/.zig/zig
+ln -sf ~/zig_files/zig/lib ~/.zig/lib
+g clone https://github.com/zigtools/zls
+cd zls
+zig build
+ln -sf ~/zig_files/zls/zig-out/bin/zls ~/.local/zig/zls
+cd
+zig version
+zls version
+
+15. iwd+systemd-networkd setup
+
+sudo systemctl disable --now NetworkManager
+sudo systemctl mask NetworkManager
+sudo systemctl enable --now systemd-networkd iwd
+sudo systemctl restart systemd-networkd iwd
+
+in /etc/iwd/main.conf :
+[General]
+EnableNetworkConfiguration=true
+
+in /etc/systemd/network/20-wired.network:
+[Match]
+Name=en*
+
+[Network]
+DHCP=yes
+
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+to get back to nm:
+
+sudo systemctl disable --now systemd-networkd iwd
+sudo systemctl unmask NetworkManager
+sudo systemctl enable --now NetworkManager
+sudo systemctl restart NetworkManager
+
+to switch back:
+
+sudo systemctl disable --now NetworkManager
+sudo systemctl mask NetworkManager
+sudo systemctl enable --now systemd-networkd iwd
+sudo systemctl restart systemd-networkd iwd
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+16. Nvidia modules
+
+The reddit post has the usual details, but there is more.
+nvidia-utils package puts an entry in /usr/lib/modules-load.d/nvidia-utils.conf,
+which makes systemd load the modules upon boot, which can be seen by:
+
+$ journalctl -b --output=short-monotonic -u systemd-modules-load.service
+
+Now, we can override this exact file by
+
+$ touch /etc/modules-load.d/nvidia-utils.conf
+
+This is because the /etc entries are preferred over the defaults in /usr/lib.
+Blacklisting the nvidia modules in /etc/modprobe.d/blacklist-nvidia.conf
+helps lighten the initcpio img. All this combined gives boost to boot times,
+and saves battery.
+For using the nvidia GPU, first load the modules using sudo /opt/hypr/nvidia.sh on
+
+17. Enable port for TCP
+
+sudo nft add rule inet filter input tcp dpor                                                    t 8000 accept
+
+18. To create initramfs with particular gpu setup
+
+sudo envycontrol -s integrated
+sudo envycontrol -s hybrid
+sudo envycontrol -s nvidia
