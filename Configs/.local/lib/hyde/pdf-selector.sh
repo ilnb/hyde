@@ -62,10 +62,17 @@ if [[ "$1" == "hidden" ]]; then
 fi
 
 while IFS= read -r f; do
-  name=$(basename "$f")
-  pdf_names+=("$name")
+  base=$(basename "$f")
+  dir=$(dirname "$f")
+  # .../dir/file.pdf -> dir/file.pdf
+  if [[ "$dir" == "$HOME" ]]; then
+    display="$base"
+  else
+    display="$(basename "$dir")/$base"
+  fi
+  pdf_names+=("$display")
   pdf_paths+=("$f")
-done < <(fd $fd_hidden -t f -e pdf --full-path "/home/$(whoami)")
+done < <(fd $fd_hidden -t f -e pdf --full-path "$HOME")
 
 # Launch rofi with the list
 selected_pdf=$(printf "%s\n" "${pdf_names[@]}" | rofi -dmenu -i -matching fuzzy "${rofi_args[@]}")

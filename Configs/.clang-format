@@ -1,5 +1,5 @@
 BasedOnStyle: LLVM
-BreakBeforeBraces: Linux
+# BreakBeforeBraces: Linux
 ColumnLimit: 100
 NamespaceIndentation: All
 AlwaysBreakTemplateDeclarations: Yes
