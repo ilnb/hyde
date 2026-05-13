@@ -3,6 +3,7 @@ BasedOnStyle: LLVM
 ColumnLimit: 100
 NamespaceIndentation: All
 AlwaysBreakTemplateDeclarations: Yes
+SpacesInBracedLists: true
 
 # BreakBeforeBraces: Custom
 # BraceWrapping:
