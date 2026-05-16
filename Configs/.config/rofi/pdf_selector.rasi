@@ -1,0 +1,147 @@
+// Config //
+configuration {
+    modi:                        "drun,filebrowser,window,run";
+    show-icons:                  true;
+    display-drun:                " ";
+    display-run:                 " ";
+    display-filebrowser:         " ";
+    display-window:              " ";
+    drun-display-format:         "{name}";
+    window-format:               "{w}{t}";
+    icon-theme:                  "Tela-circle-dracula";
+}
+
+@theme "~/.config/rofi/theme.rasi"
+
+
+// Main //
+window {
+    height:                      30em;
+    width:                       34em;
+    transparency:                "real";
+    fullscreen:                  false;
+    enabled:                     true;
+    cursor:                      "default";
+    spacing:                     0em;
+    padding:                     0em;
+    border-color:                @main-br;
+    background-color:            @main-bg;
+}
+
+mainbox {
+    enabled:                     true;
+    spacing:                     0em;
+    padding:                     0em;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listbox" ];
+    background-color:            transparent;
+}
+
+// Inputs //
+inputbar {
+    enabled:                     true;
+    spacing:                     0em;
+    padding:                     1em;
+    children:                    [ "entry" ];
+    background-color:            @main-bg;
+    border-radius:               0.5em 0.5em 0em 0em;
+    border:                      0em 0em 1px 0em;
+    border-color:                @main-fg;
+}
+
+entry {
+    enabled:                     true;
+    spacing:                     0.5em;
+    padding:                     0.2em 0.2em;
+    border-radius:               0.25em;
+    text-color:                  @main-fg;
+    background-color:            @main-bg;
+    font:                        "JetBrainsMono Nerd Font 12";
+}
+
+
+// Lists //
+listbox {
+    spacing:                     0em;
+    padding:                     0em;
+    orientation:                 horizontal;
+    children:                    [ "listview" ];
+    background-color:            @main-bg;
+}
+
+listview {
+    enabled:                     true;
+    spacing:                     0.15em;
+    padding:                     0.5em 0.75em 0.75em 0.75em;
+    columns:                     1;
+    lines:                       8;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    expand:                      true;
+    cursor:                      "default";
+    text-color:                  @main-fg;
+}
+
+
+button {
+    cursor:                      pointer;
+    border-radius:               0.75em;
+    background-color:            @main-bg;
+    text-color:                  @main-fg;
+    padding:                     0.5em 0.6em;
+}
+
+button selected {
+    background-color:            @main-fg;
+    text-color:                  @main-bg;
+}
+
+
+// Elements //
+element {
+    enabled:                     true;
+    spacing:                     0.5em;
+    padding:                     0.3em 0.6em 0.3em 0.9em;
+    cursor:                      pointer;
+    background-color:            transparent;
+    text-color:                  @main-fg;
+}
+
+element selected.normal {
+    background-color:            @select-bg;
+    text-color:                  @select-fg;
+}
+
+element-icon {
+    size:                        0em;
+}
+
+element-text {
+    vertical-align:              0.5;
+    horizontal-align:            0.0;
+    cursor:                      inherit;
+    background-color:            transparent;
+    text-color:                  inherit;
+    font:                        "JetBrainsMono Nerd Font 12";
+}
+
+
+// Error message //
+error-message {
+    text-color:                  @main-fg;
+    background-color:            @main-bg;
+    text-transform:              capitalize;
+    children:                    [ "textbox" ];
+}
+
+textbox {
+    text-color:                  inherit;
+    background-color:            inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
