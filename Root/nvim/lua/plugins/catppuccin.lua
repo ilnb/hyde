@@ -1,7 +1,9 @@
 return {
   'catppuccin/nvim',
+  -- enabled = false,
   name = 'catppuccin',
-  ---@diagnostic disable: missing-fields
+  priority = 1000,
+  lazy = false,
   ---@type CatppuccinOptions
   opts = {
     flavour = 'frappe',
@@ -11,7 +13,7 @@ return {
       conditionals = { 'italic' },
       loops = {},
       functions = {},
-      strings = {},
+      strings = { 'italic' },
       variables = {},
       numbers = {},
       booleans = {},
@@ -56,13 +58,16 @@ return {
         Pmenu = { bg = 'NONE' },
         PmenuSel = { bg = '#2D4F67' },
         BlinkCmpMenuSelection = { link = 'PmenuSel' },
+        BlinkCmpSource = { link = 'Special' },
         MiniFilesCursorLine = { link = 'PmenuSel' },
         CursorLine = { bg = 'NONE' },
         NormalFloat = { bg = 'NONE' },
         MiniFilesTitleFocused = { fg = '#F9E2AF' },
         FloatBorder = { bg = 'NONE' },
+        FloatTitle = { bg = 'NONE' },
         StatusLine = { bg = 'NONE' },
         TabLineFill = { bg = 'NONE' },
+        ['@lsp.typemod.variable.fileScope.cpp'] = { link = '@lsp.typemod.variable.defaultLibrary.cpp' },
       }
     end,
 
@@ -81,5 +86,5 @@ return {
         end
       end,
     },
-  }
+  },
 }

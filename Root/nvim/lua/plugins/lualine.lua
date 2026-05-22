@@ -1,107 +1,3 @@
-local function lualine_theme()
-  local theme = {}
-  local color = vim.g.colors_name or ''
-  if color:find 'kanagawa' then
-    theme = require 'lualine.themes.kanagawa'
-  elseif color:find 'catppuccin' then
-    theme = require 'lualine.themes.catppuccin-mocha'
-  elseif color:find 'kanso' then
-    theme = require 'lualine.themes.kanso'
-    local palette = require 'kanso.colors'.setup().palette
-
-    ---@type fun(s:string, p:number):string
-    local function darker(s, p)
-      local r = tonumber(s:sub(2, 3), 16)
-      local g = tonumber(s:sub(4, 5), 16)
-      local b = tonumber(s:sub(6, 8), 16)
-      p = 1 - p -- p% black
-      local f = math.floor
-      r = f(r * p + 0.5)
-      g = f(g * p + 0.5)
-      b = f(b * p + 0.5)
-      return string.format('#%02X%02X%02X', r, g, b)
-    end
-
-    local overrides = {
-      normal = {
-        b = { bg = darker(palette.inkBlue2, 0.75) }
-      },
-      insert = {
-        b = { bg = darker(palette.springGreen, 0.75) }
-      },
-      command = {
-        b = { bg = darker(palette.inkGray2, 0.75) }
-      },
-      visual = {
-        b = { bg = darker(palette.inkViolet, 0.75) }
-      },
-      replace = {
-        b = { bg = darker(palette.inkOrange, 0.75) }
-      },
-    }
-    for mode, sections in pairs(overrides) do
-      theme[mode] = vim.tbl_deep_extend('force', theme[mode] or {}, sections)
-    end
-  else
-    theme = require 'lualine.themes.palenight'
-    local overrides = {
-      normal = {
-        a = { bg = '#82B1FF' }, -- blue
-        b = { fg = '#82B1FF' },
-      },
-      insert = {
-        a = { bg = '#C3E88D' }, -- green
-        b = { fg = '#C3E88D' },
-      },
-      visual = {
-        a = { bg = '#C792EA' }, -- purple
-        b = { fg = '#C792EA' },
-      },
-      replace = {
-        a = { bg = '#FFA066' }, -- orange
-        b = { fg = '#FFA066' },
-      },
-      inactive = {
-        a = { bg = '#82B1FF' },
-        b = { fg = '#82B1FF' },
-        c = { fg = '#697098' },
-      },
-    }
-    for mode, sections in pairs(overrides) do
-      theme[mode] = vim.tbl_deep_extend('force', theme[mode] or {}, sections)
-    end
-  end
-  for _, sections in pairs(theme) do
-    sections.c = sections.c or {}
-    sections.c.bg = 'NONE'
-  end
-  return theme
-end
-
-local function os_icon()
-  local distro = 'Arch'
-  local handle = io.popen 'cat /etc/*release 2>/dev/null | grep ^NAME='
-  if not handle then
-    return 'Arch'
-  else
-    distro = handle:read '*a'
-    distro = distro:gsub('^NAME="?(.-)"?$', '%1')
-    handle:close()
-  end
-  if distro:match 'Ubuntu' then
-    return ''
-  elseif distro:match 'Arch' then
-    return ''
-  elseif distro:match 'Fedora' then
-    return ''
-  elseif distro:match 'Debian' then
-    return ''
-  elseif distro:match 'Mint' then
-    return '󰣭'
-  end
-  return ''
-end
-
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
@@ -125,14 +21,14 @@ return {
     vim.api.nvim_create_autocmd('ColorScheme', {
       callback = function()
         require 'lualine'.setup {
-          options = { theme = lualine_theme() },
+          options = { theme = require 'utils.plugins'.lualine_theme() },
         }
       end
     })
 
     local opts = {
       options = {
-        theme = lualine_theme(),
+        theme = require 'utils.plugins'.lualine_theme(),
         globalstatus = vim.o.laststatus == 3,
         disabled_filetypes = { statusline = { 'dashboard', 'alpha', 'ministarter', 'snacks_dashboard' } },
       },
@@ -145,17 +41,17 @@ return {
           {
             'diagnostics',
             symbols = {
-              error = " ",
-              warn  = " ",
-              info  = " ",
-              hint  = " ",
+              error = ' ',
+              warn  = ' ',
+              info  = ' ',
+              hint  = ' ',
             },
           },
 
           {
             'filetype',
             icon_only = true,
-            separator = "",
+            separator = '',
             padding = { left = 1, right = 0 }
           },
 
@@ -221,7 +117,20 @@ return {
           },
 
           {
-            function() return os_icon() end
+            'lsp_status',
+            cond = function() return vim.o.columns >= 95 end,
+            icon = '',
+            symbols = {
+              spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+              done = '✓',
+              separator = ' ',
+            },
+            ignore_lsp = {},
+            separator = { left = '' }
+          },
+
+          {
+            function() return require 'utils.plugins'.os_icon() end
           }
         },
 

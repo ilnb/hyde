@@ -1,7 +1,7 @@
 return {
   'saghen/blink.cmp',
   version = not vim.g.lazyvim_blink_main and '*',
-  build = vim.g.lazyvim_blink_main and 'cargo build --release',
+  build = 'cargo build --release',
   opts_extend = {
     'sources.default',
   },
@@ -97,8 +97,7 @@ return {
         }
       },
       ghost_text = {
-        enabled = true,
-        -- enabled = vim.g.ai_cmp,
+        enabled = false,
       }
     },
 
@@ -135,6 +134,17 @@ return {
 
   ---@param opts blink.cmp.Config | { sources: { compat: string[] } }
   config = function(_, opts)
+    -- vim.api.nvim_create_autocmd('FileType', {
+    --   pattern = {'c', 'cpp'},
+    --   callback = function(args)
+    --     local luasnip = require 'luasnip'
+    --     if args.match == 'c' then
+    --       luasnip.add_snippets('c', require 'snippets.c')
+    --     elseif args.match == 'cpp' then
+    --       luasnip.add_snippets('cpp', require 'snippets.cpp')
+    --     end
+    --   end
+    -- })
     require 'blink.cmp'.setup(opts)
   end
 }

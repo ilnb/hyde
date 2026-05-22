@@ -3,6 +3,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.g.autoformat = true
+vim.g.root_spec = { 'lsp', '.git', 'lua', 'cwd' }
 
 -- Snacks animations
 -- Set to `false` to globally disable all snacks animations

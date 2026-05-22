@@ -124,3 +124,45 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
   end,
 })
+
+-- enable snacks indent guides for new files
+vim.api.nvim_create_autocmd('BufNewFile', {
+  callback = function()
+    require 'snacks.indent'.enable()
+  end
+})
+
+-- # comment symbol for asm
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'asm',
+  callback = function()
+    vim.bo.commentstring = '# %s'
+  end
+})
+
+-- diagnostics config
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'VeryLazy',
+  callback = function()
+    vim.diagnostic.config ---@type vim.diagnostic.Opts
+    {
+      underline = { severity = 'ERROR' },
+      update_in_insert = false,
+      virtual_text = {
+        current_line = false,
+        spacing = 4,
+        source = 'if_many',
+        prefix = '●',
+      },
+      severity_sort = true,
+      signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = ' ',
+          [vim.diagnostic.severity.WARN] = ' ',
+          [vim.diagnostic.severity.HINT] = ' ',
+          [vim.diagnostic.severity.INFO] = ' ',
+        },
+      },
+    }
+  end
+})
